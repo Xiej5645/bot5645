@@ -1,5 +1,10 @@
 from flask import Flask, request, abort
 
+import os
+from dotenv import load_dotenv
+# Load environment variables from .env file
+load_dotenv() 
+
 from linebot.v3 import (
     WebhookHandler
 )
@@ -20,8 +25,8 @@ from linebot.v3.webhooks import (
 
 app = Flask(__name__)
 
-configuration = Configuration(access_token='YOUR_CHANNEL_ACCESS_TOKEN')
-handler = WebhookHandler('api_key')
+configuration = Configuration(access_token=os.getenv('CHANNEL_ACCESS_TOKEN'))
+handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
 
 @app.route("/callback", methods=['POST'])
@@ -53,6 +58,17 @@ def handle_message(event):
                 messages=[TextMessage(text=event.message.text)]
             )
         )
+
+@app.route("/")
+def hello_world():
+    return "Hello, World!"
+
+@app.route("/testing")
+def testing():
+    if os.getenv('Testing_KEY') == "55645":
+        return "key founded!"
+    else:
+        return "key not found!"
 
 if __name__ == "__main__":
     app.run()
