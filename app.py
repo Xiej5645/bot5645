@@ -14,6 +14,15 @@ app = Flask(__name__)
 setup_basic_routes(app)
 setup_line_handlers(app)
 
+def run_discord_bot():
+    while True:
+        try:
+            setup_discord_bot()
+        except Exception as e:
+            print(f"Error in Discord bot: {e}")
+            print("Restarting Discord bot in 20sec...")
+            time.sleep(20)
+
 discord_thread = threading.Thread(target=setup_discord_bot)
 discord_thread.daemon = True
 discord_thread.start()

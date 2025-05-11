@@ -1,4 +1,5 @@
 # dotenv
 .env
+local
 # py cache
 __pycache__

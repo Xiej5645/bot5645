@@ -23,6 +23,8 @@ def setup_line_handlers(app):
 
     @handler.add(MessageEvent, message=TextMessageContent)
     def handle_message(event):
+        if event.message.text != 'commands':
+            return
         with ApiClient(configuration) as api_client:
             line_bot_api = MessagingApi(api_client)
             line_bot_api.reply_message_with_http_info(
@@ -31,3 +33,17 @@ def setup_line_handlers(app):
                     messages=[TextMessage(text=event.message.text)]
                 )
             )
+        return        
+
+    @handler.default()
+    def default(event):
+        print(event)
+
+
+    @handler.add(UnfollowEvent)
+    def handle_unfollow(event):
+        print(event)
+    
+    @handler.add(FollowEvent)
+    def handle_follow(event):
+        print(event)
