@@ -1,4 +1,4 @@
-from flask import Flask
+from quart import Quart
 import os
 
 def setup_basic_routes(app):

@@ -15,6 +15,5 @@
 - works locally only
 
 ## todo
-- shifting to serverless discord bot
 - add more feature/ explore both [line bot](https://developers.line.biz/en/docs/messaging-api/overview/) and [discord bot](https://discordpy.readthedocs.io/en/stable/) documentations
 

@@ -1,32 +1,30 @@
-from flask import Flask, request, abort
-import threading
+from quart import Quart
+import asyncio
 import os
 from dotenv import load_dotenv
 load_dotenv()
+
 
 from handlers.basic_routes import setup_basic_routes
 from handlers.line_handler import setup_line_handlers
 from handlers.discord_handler import setup_discord_bot
 
-app = Flask(__name__)
+app = Quart(__name__)
+
+# intents = discord.Intents.default()
+# intents.message_content = True
+# intents.members = True
+# discord_bot = discord.Client(command_prefix='!', description='A simple Discord bot', intents=intents)
 
 # Setup handlers
 setup_basic_routes(app)
 setup_line_handlers(app)
+discord_bot = setup_discord_bot()        
 
-def run_discord_bot():
-    while True:
-        try:
-            setup_discord_bot()
-        except Exception as e:
-            print(f"Error in Discord bot: {e}")
-            print("Restarting Discord bot in 20sec...")
-            time.sleep(20)
-
-discord_thread = threading.Thread(target=setup_discord_bot)
-discord_thread.daemon = True
-discord_thread.start()
-
+async def main():
+    await asyncio.gather(
+        app.run_task(debug=True),
+        discord_bot.start(os.environ.get('DISCORD_TOKEN'))
+    )
 if __name__ == "__main__":
-    app.run(debug=True)
-    
+    asyncio.run(main())
