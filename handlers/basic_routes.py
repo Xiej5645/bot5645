@@ -7,6 +7,6 @@ def setup_basic_routes(app):
 
     @app.route("/testing")
     def testing():
-        if os.getenv('Testing_KEY') == "55645":
+        if os.environ.get('Testing_KEY') == "55645":
             return "key founded!"
         return "key not found!"

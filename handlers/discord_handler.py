@@ -21,6 +21,7 @@ def setup_discord_bot():
         
         if message.content.startswith('!hi'):
             await message.channel.send('Hello from Discord Bot!')
+            return
         else:
             await discord_bot.process_commands(message)
     @discord_bot.command(description='Roll a dice')
@@ -36,4 +37,4 @@ def setup_discord_bot():
         result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
         await ctx.send(result)
 
-    discord_bot.run(os.getenv('DISCORD_TOKEN'))
+    discord_bot.run(os.environ.get('DISCORD_TOKEN'))
