@@ -31,7 +31,7 @@ def setup_discord_bot():
         try:
             rolls, limit = map(int, dice.split('d'))
         except Exception:
-            await ctx.send('Format has to be in NdN!')
+            await ctx.send('Format has to be in NdN, ie: 2d6 2 dice of 6 faces!')
             return
 
         result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
