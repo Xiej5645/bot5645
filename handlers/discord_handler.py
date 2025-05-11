@@ -21,6 +21,8 @@ def setup_discord_bot():
         
         if message.content.startswith('!hi'):
             await message.channel.send('Hello from Discord Bot!')
+        else:
+            await discord_bot.process_commands(message)
     @discord_bot.command(description='Roll a dice')
     async def rolls(ctx, dice: str):
         # Format: NdN ie: !roll 2d6 means 2 dice with 6 sides each
